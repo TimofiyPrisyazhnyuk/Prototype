@@ -2,23 +2,29 @@
 
 namespace Prototype\Tests;
 
-use Prototype\BarBookPrototype;
-use Prototype\FooBookPrototype;
+use BarBookPrototype;
+use FooBookPrototype;
 
-require  __DIR__ .'/../BookPrototype.php';
-require  __DIR__ .'/../BarBookPrototype.php';
-require  __DIR__ .'/../FooBookPrototype.php';
+spl_autoload_register(function ($class) {
+    include __DIR__ . '/../' . $class . '.php';
+});
 
+/**
+ * Class PrototypeTest
+ * @package Prototype\Tests
+ */
 class PrototypeTest
 {
-    public function testCanGetFooBook()
+    /**
+     * Test Prototype.
+     */
+    public function test()
     {
         $fooPrototype = new FooBookPrototype();
         $barPrototype = new BarBookPrototype();
 
         // clone object
-        $time = microtime();
-        echo 'START N1- ' . $time . "\n";
+        var_dump(microtime());
         for ($i = 0; $i < 1000; $i++) {
             $book = clone $fooPrototype;
             $book->setTitle('Foo Book No ' . $i);
@@ -27,11 +33,10 @@ class PrototypeTest
             $book = clone $barPrototype;
             $book->setTitle('Bar Book No ' . $i);
         }
-        $time1 = microtime();
-        echo 'N1 - ' . (float)$time1 - (float)$time . "\n";
+        var_dump(microtime());
+        echo 'TEST_#2' . "\n";
         // new object
-        $time = microtime();
-        echo 'START N2 - ' . $time . "\n";
+        var_dump(microtime());
         for ($i = 0; $i < 1000; $i++) {
             $book = new FooBookPrototype();
             $book->setTitle('Foo Book No ' . $i);
@@ -40,10 +45,9 @@ class PrototypeTest
             $book =  new BarBookPrototype();
             $book->setTitle('Bar Book No ' . $i);
         }
-        $time1 = microtime();
-        echo 'N2 - ' . (float)$time1 - (float)$time . "\n";
-
+        var_dump(microtime());
     }
 }
 
-(new PrototypeTest)->testCanGetFooBook();
+// Run test.
+(new PrototypeTest)->test();

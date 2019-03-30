@@ -1,9 +1,8 @@
 <?php
 
-namespace Prototype;
-
-use DPrototype\BookPrototype;
-
+/**
+ * Class FooBookPrototype
+ */
 class FooBookPrototype extends BookPrototype
 {
     /**
